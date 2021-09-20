@@ -246,8 +246,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Public test build 1.0(Development)(Code By annoyedbark) placeholder art
-    by(buch https://opengameart.org/content/a-platformer-in-the-forest)
+  m_text: Public test build 1.1(Development)(Code By annoyedbark) placeholder art
+    by(buch https://opengameart.org/content/a-platformer-in-the-forest) Character
+    art by Relicstar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -518,7 +519,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.6241035, y: 1.6596624, z: -10}
+  m_LocalPosition: {x: -4.623969, y: 1.6596624, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5538,7 +5539,6 @@ GameObject:
   - component: {fileID: 1331140516}
   - component: {fileID: 1331140517}
   - component: {fileID: 1331140518}
-  - component: {fileID: 1331140519}
   m_Layer: 0
   m_Name: Jimmy
   m_TagString: Untagged
@@ -5607,8 +5607,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.169, y: -1.1, z: 0}
   m_LocalScale: {x: 0.20232926, y: 0.20232926, z: 0.20232926}
-  m_Children:
-  - {fileID: 1595541791}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5677,51 +5676,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1331140512}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e00869e595d13f54bb997a834fdf5d8b, type: 3}
+  m_Script: {fileID: 11500000, guid: 5bb72b9b90ebe484e960e9f13e6cbd58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb2D: {fileID: 1331140516}
-  animator: {fileID: 1331140515}
-  SpriteRenderer: {fileID: 1331140513}
-  moveSpeed: 5.5
-  jumpForce: 7
-  feetPos: {fileID: 1595541791}
-  checkRadius: 0.3
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 8
-  whatIsWall:
-    serializedVersion: 2
-    m_Bits: 64
-  checkRadius2: 0.1
-  wallCheck: {fileID: 0}
-  jumpTime: 0.37
---- !u!61 &1331140519
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1331140512}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 1.8739499, y: 0.08946073}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 10, y: 10}
-    newSize: {x: 10, y: 10}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.6827543, y: 3.6185553}
-  m_EdgeRadius: 0
+  spriteRenderer: {fileID: 1331140513}
+  horizontalInput: 0
+  jumpHeight: 12
+  moveSpeed: 5
+  Rigidbody2D: {fileID: 1331140516}
 --- !u!1 &1489400954
 GameObject:
   m_ObjectHideFlags: 0
@@ -5764,36 +5726,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1595541790
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1595541791}
-  m_Layer: 0
-  m_Name: feetPos
-  m_TagString: Untagged
-  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1595541791
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1595541790}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.04, y: -2.69, z: 0}
-  m_LocalScale: {x: 7.9933405, y: 7.9933405, z: 7.9933405}
-  m_Children: []
-  m_Father: {fileID: 1331140514}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1629879528
 GameObject:
@@ -7218,7 +7150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1800309680}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.6241035, y: 1.6596624, z: -10}
+  m_LocalPosition: {x: -4.623969, y: 1.6596624, z: -10}
   m_LocalScale: {x: 0.080000006, y: 1, z: 1}
   m_Children:
   - {fileID: 1629879529}
