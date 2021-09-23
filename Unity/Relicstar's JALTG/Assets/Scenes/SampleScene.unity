@@ -5645,7 +5645,7 @@ Rigidbody2D:
   m_Mass: 2
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 3
+  m_GravityScale: 3.5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -5676,14 +5676,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1331140512}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bb72b9b90ebe484e960e9f13e6cbd58, type: 3}
+  m_Script: {fileID: 11500000, guid: 8460aae5f57738541a27631877c98be4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 1331140513}
-  horizontalInput: 0
-  jumpHeight: 12
-  moveSpeed: 5
-  Rigidbody2D: {fileID: 1331140516}
+  groundLayer:
+    m_Bits: 8
+  speed: 5
+  body: {fileID: 0}
+  anim: {fileID: 0}
+  boxCollider: {fileID: 0}
 --- !u!1 &1489400954
 GameObject:
   m_ObjectHideFlags: 0
