@@ -1,265 +1,150 @@
-/*using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 //all code by annoyedbark :D if you have a question or wish to ask something email me at Annoyedbark73@gmail.com 
-public class PlayerMovement : MonoBehaviour
-{
-
-  public Rigidbody2D Rigidbody2D;
-   public SpriteRenderer spriteRenderer;
-   public CapsuleCollider2D Collider;
-   public LayerMask groundLayer;
-   public LayerMask wallLayer;
-
-   private float horizontalInput;
-   public float jumpHeight;
-   public float moveSpeed;
-
-
-
-
-   public void Awake()
-   {
-      Rigidbody2D = GetComponent<Rigidbody2D>();
-       spriteRenderer = GetComponent<SpriteRenderer>();
-       Collider = GetComponent<CapsuleCollider2D>();
-
-
-   }
-
-   // Update is called once per frame
-   // detect and execute movement
-   void Update()
-   {
-       horizontalInput = Input.GetAxisRaw("Horizontal");
-       Rigidbody2D.velocity = new Vector2( horizontalInput * moveSpeed,Rigidbody2D.velocity.y);
-
-
-       if (Input.GetKeyDown(KeyCode.A))  //flips player depending on movement
-       {
-           spriteRenderer.flipX = true;
-       }
-       else if (Input.GetKeyDown(KeyCode.D))
-       {
-           spriteRenderer.flipX = false;
-       }
-
-       if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
-       {
-          
-           Rigidbody2D.velocity = new Vector2(Rigidbody2D.velocity.x,jumpHeight);
-       }
-        print(OnWall());
-   }
-
-   public bool isGrounded()
-   {
-       RaycastHit2D raycastHit = Physics2D.CapsuleCast(Collider.bounds.center, Collider.bounds.size, 0, 0.1f, Vector2.down,groundLayer);
-           return raycastHit.collider != null;
-   }
-   public bool OnWall()
-   {
-       RaycastHit2D raycastHit = Physics2D.CapsuleCast(Collider.bounds.center, Collider.bounds.size, 0, 0.1f, new Vector2(transform.localScale.x, 0),wallLayer);
-       return raycastHit.collider != null;
-   }
-} */
-using UnityEngine;
-
-/*public class PlayerMovement : MonoBehaviour
-{
-    public float speed;
-    public float jumpPower;
-
-    public SpriteRenderer spriteRenderer;
-     public LayerMask groundLayer;
-     public LayerMask wallLayer;
-
-    public Rigidbody2D body;
-   
-
-    public CapsuleCollider2D CapsuleCollider;
-    private float wallJumpCooldown;
-    private float horizontalInput;
-
-    private void Awake()
-    {
-        //Grab references for rigidbody and animator from object
-        body = GetComponent<Rigidbody2D>();
-        CapsuleCollider = GetComponent<CapsuleCollider2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    private void Update()
-    {
-        horizontalInput = Input.GetAxis("Horizontal");
-
-        if (Input.GetKeyDown(KeyCode.A))  //flips player depending on movement
-        {
-            spriteRenderer.flipX = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            spriteRenderer.flipX = false;
-        }
-        
-
-
-        //Wall jump logic
-        if (wallJumpCooldown > 0.2f)
-        {
-            body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
-
-            if (onWall() && !isGrounded())
-            {
-                body.gravityScale = 0;
-                body.velocity = Vector2.zero;
-            }
-            else
-            {
-                body.gravityScale = 7;
-            }
-                
-
-            if (Input.GetKey(KeyCode.Space))
-            {
-                Jump();
-            }
-                
-        }
-        else
-            wallJumpCooldown += Time.deltaTime;
-
-        //print(onWall());
-
-        if (isGrounded())
-        {
-            Debug.Log("worked");
-        }
-        else
-        {
-            Debug.Log("trolled");
-        }
-    }
-
-    private void Jump()
-    {
-        if (isGrounded())
-        {
-            body.velocity = new Vector2(body.velocity.x, jumpPower);
-            
-        }
-        else if (onWall() && !isGrounded())
-        {
-            if (horizontalInput == 0)
-            {
-                body.velocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 10, 0);
-                transform.localScale = new Vector3(-Mathf.Sign(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-            }
-            else
-                body.velocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 3, 6);
-
-            wallJumpCooldown = 0;
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-
-    }
-
-    private bool isGrounded()
-    {
-        RaycastHit2D raycastHit = Physics2D.CapsuleCast(CapsuleCollider.bounds.center, CapsuleCollider.bounds.size, 0, 0.1f, Vector2.down, groundLayer);
-        return raycastHit.collider != null;
-        
-    }
-    private bool onWall()
-    {
-        RaycastHit2D raycastHit = Physics2D.CapsuleCast(CapsuleCollider.bounds.center,CapsuleCollider.bounds.size, 0,0.1f, new Vector2(transform.localScale.x, 0) , wallLayer);
-        return raycastHit.collider != null;
-    }
-} */
-
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed;
-    [SerializeField] private float jumpPower;
-    [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private LayerMask wallLayer;
+	[SerializeField] private float m_JumpForce = 400f;                          // Amount of force added when the player jumps.
+	[Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;          // Amount of maxSpeed applied to crouching movement. 1 = 100%
+	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;  // How much to smooth out the movement
+	[SerializeField] private bool m_AirControl = false;                         // Whether or not a player can steer while jumping;
+	[SerializeField] private LayerMask m_WhatIsGround;                          // A mask determining what is ground to the character
+	[SerializeField] private Transform m_GroundCheck;                           // A position marking where to check if the player is grounded.
+	[SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
+	[SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider that will be disabled when crouching
 
-    public Rigidbody2D body;
-    public SpriteRenderer spriteRenderer;
-    public BoxCollider2D boxCollider;
+	const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+	private bool m_Grounded;            // Whether or not the player is grounded.
+	const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
+	private Rigidbody2D m_Rigidbody2D;
+	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+	private Vector3 m_Velocity = Vector3.zero;
 
-    private float wallJumpCooldown;
-    private float horizontalInput;
+	[Header("Events")]
+	[Space]
 
-    private void Awake()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        body = GetComponent<Rigidbody2D>();
-        boxCollider = GetComponent<BoxCollider2D>();
-    }
+	public UnityEvent OnLandEvent;
 
-    private void Update()
-    {
-        horizontalInput = Input.GetAxis("Horizontal");
+	[System.Serializable]
+	public class BoolEvent : UnityEvent<bool> { }
 
-       
+	public BoolEvent OnCrouchEvent;
+	private bool m_wasCrouching = false;
 
-       
-        //Wall jump logic
-        if (wallJumpCooldown > 0.2f)
-        {
-            body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
+	private void Awake()
+	{
+		m_Rigidbody2D = GetComponent<Rigidbody2D>();
 
-            if (onWall() && !isGrounded())
-            {
-                body.gravityScale = 0;
-                body.velocity = Vector2.zero;
-            }
-            else
-                body.gravityScale = 7;
+		if (OnLandEvent == null)
+			OnLandEvent = new UnityEvent();
 
-            if (Input.GetKey(KeyCode.Space))
-                Jump();
-        }
-        else
-            wallJumpCooldown += Time.deltaTime;
-    }
+		if (OnCrouchEvent == null)
+			OnCrouchEvent = new BoolEvent();
+	}
 
-    private void Jump()
-    {
-        if (isGrounded())
-        {
-            body.velocity = new Vector2(body.velocity.x, jumpPower);
-           
-        }
-        else if (onWall() && !isGrounded())
-        {
-            if (horizontalInput == 0)
-            {
-                body.velocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 10, 0);
-                transform.localScale = new Vector3(-Mathf.Sign(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-            }
-            else
-                body.velocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 3, 6);
+	private void FixedUpdate()
+	{
+		bool wasGrounded = m_Grounded;
+		m_Grounded = false;
 
-            wallJumpCooldown = 0;
-        }
-    }
+		// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
+		// This can be done using layers instead but Sample Assets will not overwrite your project settings.
+		Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
+		for (int i = 0; i < colliders.Length; i++)
+		{
+			if (colliders[i].gameObject != gameObject)
+			{
+				m_Grounded = true;
+				if (!wasGrounded)
+					OnLandEvent.Invoke();
+			}
+		}
+	}
 
 
-    private bool isGrounded()
-    {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
-        return raycastHit.collider != null;
-    }
-    private bool onWall()
-    {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, new Vector2(transform.localScale.x, 0), 0.1f, wallLayer);
-        return raycastHit.collider != null;
-    }
-    
+	public void Move(float move, bool crouch, bool jump)
+	{
+		// If crouching, check to see if the character can stand up
+		if (!crouch)
+		{
+			// If the character has a ceiling preventing them from standing up, keep them crouching
+			if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
+			{
+				crouch = true;
+			}
+		}
+
+		//only control the player if grounded or airControl is turned on
+		if (m_Grounded || m_AirControl)
+		{
+
+			// If crouching
+			if (crouch)
+			{
+				if (!m_wasCrouching)
+				{
+					m_wasCrouching = true;
+					OnCrouchEvent.Invoke(true);
+				}
+
+				// Reduce the speed by the crouchSpeed multiplier
+				move *= m_CrouchSpeed;
+
+				// Disable one of the colliders when crouching
+				if (m_CrouchDisableCollider != null)
+					m_CrouchDisableCollider.enabled = false;
+			}
+			else
+			{
+				// Enable the collider when not crouching
+				if (m_CrouchDisableCollider != null)
+					m_CrouchDisableCollider.enabled = true;
+
+				if (m_wasCrouching)
+				{
+					m_wasCrouching = false;
+					OnCrouchEvent.Invoke(false);
+				}
+			}
+
+			// Move the character by finding the target velocity
+			Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
+			// And then smoothing it out and applying it to the character
+			m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
+
+			// If the input is moving the player right and the player is facing left...
+			if (move > 0 && !m_FacingRight)
+			{
+				// ... flip the player.
+				Flip();
+			}
+			// Otherwise if the input is moving the player left and the player is facing right...
+			else if (move < 0 && m_FacingRight)
+			{
+				// ... flip the player.
+				Flip();
+			}
+		}
+		// If the player should jump...
+		if (m_Grounded && jump)
+		{
+			// Add a vertical force to the player.
+			m_Grounded = false;
+			m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+		}
+	}
+
+
+	private void Flip()
+	{
+		// Switch the way the player is labelled as facing.
+		m_FacingRight = !m_FacingRight;
+
+		// Multiply the player's x local scale by -1.
+		Vector3 theScale = transform.localScale;
+		theScale.x *= -1;
+		transform.localScale = theScale;
+	}
 }
