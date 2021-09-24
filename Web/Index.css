@@ -5,7 +5,7 @@ header
  padding-left: 5px;
  margin: -10px; 
  padding-top: 10px;
- padding-bottom: 2px;
+ padding-bottom: 10px;
 
  display: flex;
     align-items: flex-end;
@@ -28,23 +28,52 @@ span
  font-family: Roboto Condensed, sans-serif;
  font-size: 40px;
  text-align: center;
+ margin: 100;
+ margin-bottom: 100px;
+ 
 
+}
+
+.main text
+{
+    overflow: hidden;
 }
 
 .logo
 {
- width: 28%;
+    image-rendering: -moz-crisp-edges; /* Firefox */
+image-rendering: -o-crisp-edges; /* Opera */
+image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming) */
+image-rendering: pixelated;
+
+
+ width: 30%;
  height: auto;
- float: right;
- ;
+ float: left;
+ 
+}
+body
+{
+   background-color: #d7edd3;
 }
 
 .Paragraph
 {
+
  font-family: Noto Sans, sans-serif;
- font-size: 18px;
- text-justify: auto;
- text-align: justify;
+ font-size: 24px;
+ text-align: right;
+ margin-right: 200px;
+ 
+ 
+ 
+}
+.Paragraph2
+{   margin-top: 100px;
+    font-family: Noto Sans, sans-serif;
+    font-size: 18px;
+    text-align: left;
+    color: #3b3b3b;
 }
 
 button
@@ -52,7 +81,7 @@ button
     background-color: #38d4a4;
     border: none;
     color: black;
-    padding: 30px 64px;
+    padding: 33px 66px;
     text-align: right;
     text-decoration: none;
     display: inline-block;
@@ -74,13 +103,33 @@ button:hover
 
 .end
 {
-    background-color: #50ffc8;
+    background-color: #4FFFCD;
  padding-right: 10px;
  padding-left: 5px;
  margin: -10px; 
  padding-top: 10px;
  padding-bottom: 2px;
+ font-family: Noto Sans, sans-serif;
+ font-size: 12px;
+ color:grey;
 
+margin: -10; 
+
+margin-top: 1500px;
  display: flex;
     align-items: flex-end;
+    padding: 100px;
+}
+
+.small 
+{
+margin-bottom: 10px;
+}
+
+.gif
+{
+width: 50%;
+height: auto;
+float: right;
+
 }
