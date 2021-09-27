@@ -76,6 +76,21 @@ body
     color: #3b3b3b;
 }
 
+
+
+.ButtonDiv
+{ padding-top: 10px;
+ padding-left: 400px;
+ float: left;
+}
+.ButtonDiv2
+{
+    padding-top: 100px;
+ padding-left: 420px;
+ float: left;
+ 
+}
+
 button
 {   
     background-color: #38d4a4;
@@ -95,10 +110,34 @@ button
 
 
 }
+
 button:hover
 {
   background-color: #15EDA2;
   color: black;
+}
+
+.button2
+{
+    background-color: #8C2FA7;
+    border: none;
+    color: black;
+    padding: 33px 66px;
+    text-align: right;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 24px;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+   transition-duration: 0.3s;
+}
+.button2:hover
+{
+    background-color: #CC44F2;
+    color: black;
 }
 
 .end
@@ -132,4 +171,24 @@ width: 50%;
 height: auto;
 float: right;
 
+}
+
+.Paragraph3
+{
+    padding-top: 300px;
+    font-family: Noto Sans, sans-serif;
+ font-size: 24px;
+ text-align: right;
+ margin-right: 200px;
+}
+
+.Paragraph4
+{
+    
+    font-family: Noto Sans, sans-serif;
+    font-size: 18px;
+    text-align: left;
+    color: #3b3b3b;
+    padding-left: 1000px;
+    
 }
