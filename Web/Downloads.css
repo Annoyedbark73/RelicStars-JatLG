@@ -6,3 +6,23 @@ body
    background-color: #d7edd3;
 }
 
+.btn {
+    background-color: #38d4a4;
+    border: none;
+    border-radius: 20px;
+    color: black;
+    padding: 50px 300px;
+    cursor: pointer;
+    font-size: 20px;
+    transition-duration: 0.3s;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+    
+}
+
+.btn:hover
+{
+    background-color: #15EDA2;
+}
