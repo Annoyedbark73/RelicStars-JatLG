@@ -30,6 +30,7 @@ span
  text-align: center;
  margin: 100;
  margin-bottom: 100px;
+ padding: 100px;
  
 
 }
@@ -79,9 +80,10 @@ body
 
 
 .ButtonDiv
-{ padding-top: 10px;
- padding-left: 400px;
- float: left;
+{ 
+    padding-top: 100px;
+ padding-left: 420px;
+ 
 }
 .ButtonDiv2
 {
@@ -182,13 +184,3 @@ float: right;
  margin-right: 200px;
 }
 
-.Paragraph4
-{
-    
-    font-family: Noto Sans, sans-serif;
-    font-size: 18px;
-    text-align: left;
-    color: #3b3b3b;
-    padding-left: 1000px;
-    
-}
